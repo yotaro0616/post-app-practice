@@ -8,11 +8,18 @@ use Illuminate\Http\Request;
 
 class PostController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $posts = Post::with(['user', 'category'])->latest()->get();
+        $categoryId = $request->query('category_id');
 
-        return view('posts.index', compact('posts'));
+        $posts = Post::with(['user', 'category'])
+            ->when($categoryId, fn ($query) => $query->where('category_id', $categoryId))
+            ->latest()
+            ->get();
+
+        $categories = Category::orderBy('id')->get();
+
+        return view('posts.index', compact('posts', 'categories', 'categoryId'));
     }
 
     public function edit(Post $post)

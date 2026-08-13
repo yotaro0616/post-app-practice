@@ -23,6 +23,12 @@
         .btn-edit:hover { background: #2563eb; }
         .btn-delete { background: #ef4444; color: white; border: none; }
         .btn-delete:hover { background: #dc2626; }
+        .filter { background: white; padding: 1rem; border-radius: 8px; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); margin-bottom: 1rem; display: flex; gap: 0.5rem; align-items: center; }
+        .filter label { color: #374151; font-size: 0.875rem; }
+        .filter select { padding: 0.5rem; border: 1px solid #d1d5db; border-radius: 4px; font-size: 0.875rem; }
+        .filter button { background: #3b82f6; color: white; border: none; padding: 0.5rem 1rem; border-radius: 4px; font-size: 0.875rem; cursor: pointer; }
+        .filter button:hover { background: #2563eb; }
+        .count { color: #6b7280; font-size: 0.875rem; margin-bottom: 1rem; }
         .empty { color: #6b7280; text-align: center; padding: 2rem; }
     </style>
 </head>
@@ -37,6 +43,19 @@
                 <button type="submit" class="logout-btn">ログアウト</button>
             </form>
         </div>
+
+        <form action="{{ route('posts.index') }}" method="GET" class="filter">
+            <label for="category_id">カテゴリ</label>
+            <select id="category_id" name="category_id">
+                <option value="">すべて</option>
+                @foreach ($categories as $category)
+                    <option value="{{ $category->id }}" @selected($categoryId == $category->id)>{{ $category->name }}</option>
+                @endforeach
+            </select>
+            <button type="submit">絞り込む</button>
+        </form>
+
+        <p class="count">{{ $posts->count() }} 件</p>
 
         @if($posts->isEmpty())
             <p class="empty">投稿がありません。</p>
