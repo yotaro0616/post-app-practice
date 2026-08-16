@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use App\Models\Category;
+use App\Models\Comment;
 use App\Models\Post;
 use App\Models\User;
 use Illuminate\Database\Seeder;
@@ -32,7 +33,7 @@ class DatabaseSeeder extends Seeder
         ]);
 
         // ユーザーAの投稿
-        Post::create([
+        $postA1 = Post::create([
             'user_id' => $userA->id,
             'category_id' => $notice->id,
             'title' => 'ユーザーAの投稿1',
@@ -59,6 +60,20 @@ class DatabaseSeeder extends Seeder
             'category_id' => $notice->id,
             'title' => 'ユーザーBの投稿2',
             'content' => 'ユーザーBの2つ目の投稿です。',
+        ]);
+
+        // ユーザーAの投稿1へのコメント
+        // 他人のコメントは消せないことを確認できるよう、A・B 双方のコメントを入れる
+        Comment::create([
+            'post_id' => $postA1->id,
+            'user_id' => $userB->id,
+            'content' => 'なるほど、参考になりました。',
+        ]);
+
+        Comment::create([
+            'post_id' => $postA1->id,
+            'user_id' => $userA->id,
+            'content' => 'ありがとうございます。',
         ]);
     }
 }

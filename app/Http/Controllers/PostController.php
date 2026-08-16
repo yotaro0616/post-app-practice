@@ -22,6 +22,13 @@ class PostController extends Controller
         return view('posts.index', compact('posts', 'categories', 'categoryId'));
     }
 
+    public function show(Post $post)
+    {
+        $post->load(['user', 'category', 'comments.user']);
+
+        return view('posts.show', compact('post'));
+    }
+
     public function edit(Post $post)
     {
         $this->authorize('update', $post);

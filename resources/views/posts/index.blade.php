@@ -15,6 +15,8 @@
         .logout-btn:hover { background: #dc2626; }
         .post-card { background: white; padding: 1.5rem; border-radius: 8px; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); margin-bottom: 1rem; }
         .post-card h2 { color: #1f2937; font-size: 1.25rem; margin-bottom: 0.5rem; }
+        .post-card h2 a { color: inherit; text-decoration: none; }
+        .post-card h2 a:hover { text-decoration: underline; }
         .post-card .meta { color: #6b7280; font-size: 0.875rem; margin-bottom: 0.75rem; }
         .post-card .content { color: #374151; margin-bottom: 1rem; }
         .post-card .actions { display: flex; gap: 0.5rem; }
@@ -62,7 +64,7 @@
         @else
             @foreach ($posts as $post)
                 <div class="post-card">
-                    <h2>{{ $post->title }}</h2>
+                    <h2><a href="{{ route('posts.show', $post) }}">{{ $post->title }}</a></h2>
                     <p class="meta">投稿者: {{ $post->user->name }}／カテゴリ: {{ $post->category->name }}</p>
                     <p class="content">{{ $post->content }}</p>
                     <div class="actions">
