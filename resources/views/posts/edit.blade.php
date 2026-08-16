@@ -21,6 +21,8 @@
         .btn-secondary { background: #e5e7eb; color: #374151; border: none; }
         .btn-secondary:hover { background: #d1d5db; }
         .error { color: #dc2626; font-size: 0.875rem; margin-top: 0.25rem; }
+        .counter { color: #6b7280; font-size: 0.875rem; margin-top: 0.25rem; text-align: right; }
+        .counter.over { color: #dc2626; }
     </style>
 </head>
 <body>
@@ -54,6 +56,7 @@
             <div class="form-group">
                 <label for="content">本文</label>
                 <textarea id="content" name="content" required>{{ old('content', $post->content) }}</textarea>
+                <p class="counter" id="content-counter"></p>
                 @error('content')
                     <p class="error">{{ $message }}</p>
                 @enderror
@@ -65,5 +68,22 @@
             </div>
         </form>
     </div>
+
+    <script>
+        const CONTENT_MAX = 140;
+        const contentInput = document.getElementById('content');
+        const contentCounter = document.getElementById('content-counter');
+
+        function updateContentCounter() {
+            // [...str] で数えると、絵文字などもサーバ側の mb_strlen と同じ数え方になる
+            const remaining = CONTENT_MAX - [...contentInput.value].length;
+
+            contentCounter.textContent = remaining >= 0 ? `残り${remaining}字` : `${-remaining}字オーバー`;
+            contentCounter.classList.toggle('over', remaining < 0);
+        }
+
+        contentInput.addEventListener('input', updateContentCounter);
+        updateContentCounter();
+    </script>
 </body>
 </html>
