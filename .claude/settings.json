@@ -1,0 +1,23 @@
+{
+  "permissions": {
+    "deny": [
+      "Read(./.env)",
+      "Read(./.env.local)",
+      "Bash(cat ./.env*)",
+      "Bash(cat .env*)"
+    ],
+    "ask": [
+      "Bash(git push:*)"
+    ],
+    "allow": [
+      "Bash(./vendor/bin/sail test:*)",
+      "Bash(sail test:*)",
+      "Bash(vendor/bin/sail test:*)",
+      "Bash(./vendor/bin/sail artisan test:*)",
+      "Bash(sail artisan test:*)",
+      "Bash(php artisan test:*)",
+      "Bash(./vendor/bin/phpunit:*)",
+      "Bash(vendor/bin/phpunit:*)"
+    ]
+  }
+}
